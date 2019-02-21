@@ -19,7 +19,7 @@ ylabel( 'Temperature [C]' )
 b = -50; %C
 a = (1/10)*(1000); %(mV/C) * (1/1000)
 T = a*combinedData(:,2) + b;
-deltaTIC = a*.000005;
+deltaTIC = a*.000005
 
 figure(2)
 plot(1:length(combinedData), T)
@@ -75,18 +75,42 @@ ylabel( 'Temperature [C]' )
 %plot distribution of thermocouple 
 figure(4)
 histfit(combinedData(:,1))
-
+title("Distribution of Thermocouple Readings"); 
+xlabel( 'Temperature [C]' )
+ylabel( 'Number of Samples' )
+stdThermocouple = std(combinedData(:,1))
 %plot distribution of IC
 figure(5)
 histfit(T)
-
+title("Distribution of IC Readings"); 
+xlabel( 'Temperature [C]' )
+ylabel( 'Number of Samples' )
+stdIC = std(T)
 %plot distribution of Thermistor
 figure(6)
 histfit(tThermistor)
+title("Distribution of Thermistor Readings"); 
+xlabel( 'Temperature [C]' )
+ylabel( 'Number of Samples' )
+stdThermisor =  std(tThermistor)
 
+figure (7)
+thermistorc = xlsread('lab2_thermc.xlsx');
+for i=1:length(thermistorc)
+    Rt = R*thermistorc(i,2) / (Vin - thermistorc(i,2));
+    tThermistorCold(i) = 1/(consts(1) + consts(2)*log(Rt) + consts(3)*(log(Rt))^3);
+end
+plot(1:length(tThermistorCold), tThermistorCold)
 
+figure(8)
+ICh = xlsread('lab2_therma.xlsx');
 
-
+Vin =5;
+for i=1:length(ICh)
+    Rt = R*ICh(i,2) / (Vin - ICh(i,2));
+    tThermistorHot(i) = 1/(consts(1) + consts(2)*log(Rt) + consts(3)*(log(Rt))^3);
+end
+plot(1:length(ICh), tThermistorHot)
 
 
 
