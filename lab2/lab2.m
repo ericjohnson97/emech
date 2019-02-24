@@ -37,19 +37,19 @@ ylabel( 'Temperature [C]' )
 R = 1430; %ohms
 Vin = 5; %V
 %cold
-Tc = 6.44;
+Tc = 6.44 + 273;
 Vc = 4.4449;
 Rtc = R*Vc/(Vin - Vc);
 Kc = log(Rtc);
 
 %hot
-Th = 42.5;
-Vh = 3.6634;
+Th = 42.5 + 273;
+Vh = 2.6634;
 Rth = R*Vh/(Vin - Vh);
 Kh = log(Rth);
 
 %ambient 
-Ta = 23.15;
+Ta = 23.15 + 273;
 Va = 3.8068;
 Rta = R*Va/(Vin-Va);
 Ka = log(Rta);
@@ -66,7 +66,7 @@ end
 
 
 figure(3)
-plot(1:length(combinedData), tThermistor)
+plot(1:length(combinedData), tThermistor-273)
 title("Temperature Over Time Thermistor"); 
 xlabel( 'Time' )
 ylabel( 'Temperature [C]' )
@@ -100,20 +100,23 @@ for i=1:length(thermistorc)
     Rt = R*thermistorc(i,2) / (Vin - thermistorc(i,2));
     tThermistorCold(i) = 1/(consts(1) + consts(2)*log(Rt) + consts(3)*(log(Rt))^3);
 end
-plot(1:length(tThermistorCold), tThermistorCold)
+plot((1:length(tThermistorCold))/100, tThermistorCold-273)
+title("Temperature Change from Cold to Hot to Ambient"); 
+ylabel( 'Temperature [C]' )
+xlabel( 'Time [s]' )
 
 figure(8)
 ICh = xlsread('lab2_therma.xlsx');
 
-Vin =5;
+Vin = 5;
 for i=1:length(ICh)
     Rt = R*ICh(i,2) / (Vin - ICh(i,2));
     tThermistorHot(i) = 1/(consts(1) + consts(2)*log(Rt) + consts(3)*(log(Rt))^3);
 end
-plot(1:length(ICh), tThermistorHot)
-
-
-
+plot(1:length(ICh), tThermistorHot-273)
+title("Temperature Change from Cold to Hot"); 
+ylabel( 'Temperature [C]' )
+xlabel( 'Time [s]' )
 
 
 
