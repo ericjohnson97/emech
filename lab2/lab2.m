@@ -88,7 +88,7 @@ ylabel( 'Number of Samples' )
 stdIC = std(T)
 %plot distribution of Thermistor
 figure(6)
-histfit(tThermistor)
+histfit(tThermistor-273)
 title("Distribution of Thermistor Readings"); 
 xlabel( 'Temperature [C]' )
 ylabel( 'Number of Samples' )
@@ -113,8 +113,8 @@ for i=1:length(ICh)
     Rt = R*ICh(i,2) / (Vin - ICh(i,2));
     tThermistorHot(i) = 1/(consts(1) + consts(2)*log(Rt) + consts(3)*(log(Rt))^3);
 end
-plot(1:length(ICh), tThermistorHot-273)
-title("Temperature Change from Cold to Hot"); 
+plot((1:length(ICh))/100, tThermistorHot-273)
+title("Temperature Change from Ambient to Hot"); 
 ylabel( 'Temperature [C]' )
 xlabel( 'Time [s]' )
 
