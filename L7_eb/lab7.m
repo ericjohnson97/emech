@@ -15,6 +15,7 @@ tipAccel = ((data(:,2)-mean(data(:,2)))*1000*9.8)/( Cmems);
 tipDisp = abs(tipAccel)./freq.^2;
 
 
+
 figure(1)
 subplot(311);
 plot(freq,tipAccel,'k-');
